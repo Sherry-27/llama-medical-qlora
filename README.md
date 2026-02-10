@@ -1,10 +1,10 @@
-Llama-3.2-1B-Instruct Medical QLoRA
+## Llama-3.2-1B-Instruct Medical QLoRA
 
 This repository contains a parameter-efficient fine-tuned medical reasoning model based on Meta Llama 3.2-1B-Instruct, trained using LoRA and QLoRA (4-bit quantization) on an English medical reasoning dataset.
 
 The project demonstrates how high-quality medical reasoning performance can be achieved while training less than 0.5% of total model parameters, making it suitable for low-resource environments and research prototyping.
 
-Model Overview
+## Model Overview
 
 Base Model: meta-llama/Llama-3.2-1B-Instruct
 
@@ -28,8 +28,8 @@ The model is trained to generate step-by-step reasoning followed by a final answ
 - **Kaggle Training Notebook**:  
   https://www.kaggle.com/code/shaheerkhan27/llm-lora-fine-tuning
 
-Intended Use
-Supported Use
+## Intended Use
+## Supported Use
 
 Medical question answering (educational / research)
 
@@ -39,7 +39,7 @@ Medical AI prototyping
 
 Instruction-following medical dialogue
 
-Out-of-Scope Use
+## Out-of-Scope Use
 
 Real-world clinical diagnosis or treatment decisions
 
@@ -49,7 +49,7 @@ High-risk healthcare applications without expert supervision
 
 This model is not clinically validated and must not be used for real medical decisions.
 
-Dataset
+## Dataset
 
 Dataset: medical-o1-reasoning-SFT (English subset)
 
@@ -67,14 +67,14 @@ Average Input Length: 156 tokens
 
 Average Output Length: 89 tokens
 
-Data Format
+## Data Format
 {
   "instruction": "Analyze the following medical case",
   "input": "A 62-year-old diabetic patient presents with...",
   "output": "Based on the symptoms, the differential diagnosis includes..."
 }
 
-Training Summary
+## Training Summary
 
 Hardware: Kaggle T4 / P100 GPU (16GB VRAM)
 
@@ -88,7 +88,7 @@ Precision: FP16
 
 Quantization: NF4 4-bit (bitsandbytes)
 
-LoRA Configuration
+## LoRA Configuration
 LoraConfig(
     r=16,
     lora_alpha=32,
@@ -101,7 +101,7 @@ LoraConfig(
     task_type="CAUSAL_LM"
 )
 
-QLoRA Quantization
+## QLoRA Quantization
 BitsAndBytesConfig(
     load_in_4bit=True,
     bnb_4bit_quant_type="nf4",
@@ -122,12 +122,12 @@ Base Llama-3.2-1B	52.3%	0	—
 Full Fine-Tuning	89.2%	1.2B	42GB
 LoRA (r=8)	84.8%	2.1M	14GB
 QLoRA (r=16)	87.0%	4.2M	12GB
-Installation
+## Installation
 git clone https://github.com/Sherry-27/llama-lora-finetuning.git
 cd llama-lora-finetuning
 pip install -r requirements.txt
 
-Requirements
+## Requirements
 torch>=2.0.0
 transformers>=4.35.0
 peft>=0.7.0
@@ -138,7 +138,7 @@ accelerate>=0.24.0
 wandb>=0.16.0
 gradio>=4.0.0
 
-Training
+## Training
 python train.py \
   --model_name meta-llama/Llama-3.2-1B-Instruct \
   --num_epochs 3 \
@@ -147,7 +147,7 @@ python train.py \
   --learning_rate 2e-4 \
   --lora_r 16
 
-Inference
+## Inference
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from peft import PeftModel
 
@@ -171,7 +171,7 @@ inputs = tokenizer(prompt, return_tensors="pt").to("cuda")
 outputs = model.generate(**inputs, max_new_tokens=256)
 print(tokenizer.decode(outputs[0], skip_special_tokens=True))
 
-Project Structure
+## Project Structure
 llama-lora-finetuning/
 ├── data/
 ├── src/
@@ -183,7 +183,7 @@ llama-lora-finetuning/
 ├── requirements.txt
 └── README.md
 
-Limitations & Risks
+## Limitations & Risks
 
 Not clinically validated
 
@@ -193,11 +193,11 @@ English-only training
 
 Must be used with expert oversight
 
-License
+## License
 
 This project follows the Llama 3.2 Community License, consistent with the base model.
 
-Citation
+## Citation
 @misc{khan2025llama,
   author = {Shaheer Khan},
   title = {Parameter-Efficient Fine-Tuning of Llama 3.2 for Medical Reasoning},
@@ -206,7 +206,7 @@ Citation
   url = {https://github.com/Sherry-27/llama-lora-finetuning}
 }
 
-Contact
+## Contact
 
 Shaheer Khan
 GitHub: https://github.com/Sherry-27
